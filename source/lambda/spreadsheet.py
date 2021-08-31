@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from authenticator import Authenticator
 from googleapiclient.discovery import build
 
@@ -35,9 +37,8 @@ class Spreadsheet:
 
         return rows
 
-    # TODO: Return last row
     def get_last_row(self):
-        pass
+        return self.rows[-1]
 
     # TODO: Append new row
     def create_row(self):

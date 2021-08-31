@@ -1,17 +1,25 @@
 # -*- coding: utf-8 -*-
 
 import logging
-import ask_sdk_core.utils as ask_utils
+import os
+from dotenv import load_dotenv
 
+import ask_sdk_core.utils as ask_utils
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.dispatch_components import AbstractExceptionHandler
-from ask_sdk_core.handler_input import HandlerInput
 
-from ask_sdk_model import Response
+from spreadsheet import Spreadsheet
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
+
+load_dotenv()
+
+spreadsheet = Spreadsheet(
+    os.environ['GOOGLE_SPREADSHEET_ID'],
+    os.environ['SPREADSHEET_RANGE']
+)
 
 
 class LaunchRequestHandler(AbstractRequestHandler):
@@ -35,12 +43,16 @@ class ReadLastMealIntentHandler(AbstractRequestHandler):
     """Handler for ReadLastMeal Intent."""
 
     def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
         return ask_utils.is_intent_name("ReadLastMeal")(handler_input)
 
     def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
-        speak_output = "Sua última refeição foi o almoço. Você comeu arroz, feijão, brócolis e suco de morango."
+        last_meal = spreadsheet.get_last_row()
+        data = last_meal[0]
+        meal = last_meal[1]
+        hour = last_meal[3]
+        food = last_meal[4]
+
+        speak_output = f"Sua última refeição foi {meal} no dia {data} às {hour}. Você comeu {food}"
         reprompt = "Tem mais alguma pergunta? Se não diga terminei."
 
         return (
