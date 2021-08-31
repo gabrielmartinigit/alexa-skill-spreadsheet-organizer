@@ -1,0 +1,8 @@
+# OSX
+.DS_Store
+
+# Python
+.venv
+
+# Skill
+*.zip
