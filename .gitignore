@@ -3,6 +3,12 @@
 
 # Python
 .venv
+__pycache__
 
 # Skill
 *.zip
+.env
+
+# Google
+credentials.json
+token.json
