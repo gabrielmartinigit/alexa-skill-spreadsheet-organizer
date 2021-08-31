@@ -9,6 +9,10 @@ __pycache__
 *.zip
 .env
 
+# SAM
+.aws-sam
+samconfig.toml
+
 # Google
 credentials.json
 token.json

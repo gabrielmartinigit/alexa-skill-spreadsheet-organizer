@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: SAM Template for alexa-skill-spreadsheet-organizer
+
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  SpreadsheetOrganizerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: source/lambda
+      Handler: app.lambda_handler
+      Runtime: python3.7
+      Events:
+        AlexaSkillEvent:
+          Type: AlexaSkill
+          Properties:
+            SkillId: amzn1.ask.skill.22d2b807-7af3-4ba3-8838-f20a201d1bf1
+      Environment:
+        Variables:
+          GOOGLE_SPREADSHEET_ID: "1HED3wBM2JA67VmQ-OQUe5272dm5n0bHrbkp0OMpFBkg"
+          SPREADSHEET_RANGE: "A2:G"
+
+Outputs:
+  SpreadsheetOrganizerFunction:
+    Description: "SpreadsheetOrganizer Lambda Function ARN"
+    Value: !GetAtt SpreadsheetOrganizerFunction.Arn
+  SpreadsheetOrganizerFunctionIamRole:
+    Description: "Implicit IAM Role created for SpreadsheetOrganizer function"
+    Value: !GetAtt SpreadsheetOrganizerFunctionRole.Arn
