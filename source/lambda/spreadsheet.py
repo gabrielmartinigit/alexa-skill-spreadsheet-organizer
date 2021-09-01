@@ -10,7 +10,7 @@ class Spreadsheet:
         self.spreadsheet_id = spreadsheet_id
         self.api_key = api_key  # API Key for public spreadsheets
         self.__remote_sheet_client = self.__create_remote_spreadsheet_client()
-        self.rows = self.__rows()
+        self.rows = self.__get_rows()
 
     def __create_remote_spreadsheet_client(self):
         # If spreadsheet is public create client with API Key
@@ -29,7 +29,7 @@ class Spreadsheet:
 
         return sheet
 
-    def __rows(self):
+    def __get_rows(self):
         rows = None
 
         result = self.__remote_sheet_client.values().get(
