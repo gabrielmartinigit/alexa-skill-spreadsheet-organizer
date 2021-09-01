@@ -51,12 +51,12 @@ class ReadLastMealIntentHandler(AbstractRequestHandler):
         food = last_meal[4]
 
         speak_output = f"Sua última refeição foi {meal} no dia {data} às {hour}. Você comeu {food}"
-        reprompt = "Tem mais alguma pergunta? Se não diga terminei."
+        #reprompt = "Tem mais alguma pergunta? Se não diga terminei."
 
         return (
             handler_input.response_builder
             .speak(speak_output)
-            .ask(reprompt)
+            # .ask(reprompt)
             .response
         )
 
