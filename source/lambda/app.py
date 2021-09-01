@@ -13,12 +13,6 @@ from spreadsheet import Spreadsheet
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-spreadsheet = Spreadsheet(
-    os.environ['GOOGLESPREADSHEETID'],
-    os.environ['SPREADSHEETRANGE'],
-    os.environ['GOOGLESHEETAPIKEY']
-)
-
 
 class LaunchRequestHandler(AbstractRequestHandler):
     """Handler for Skill Launch."""
@@ -44,6 +38,12 @@ class ReadLastMealIntentHandler(AbstractRequestHandler):
         return ask_utils.is_intent_name("ReadLastMeal")(handler_input)
 
     def handle(self, handler_input):
+        spreadsheet = Spreadsheet(
+            os.environ['GOOGLESPREADSHEETID'],
+            os.environ['SPREADSHEETRANGE'],
+            os.environ['GOOGLESHEETAPIKEY']
+        )
+
         last_meal = spreadsheet.get_last_row()
         data = last_meal[0]
         meal = last_meal[1]
