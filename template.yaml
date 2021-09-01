@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: SAM Template for alexa-skill-spreadsheet-organizer
 
@@ -20,8 +20,9 @@ Resources:
             SkillId: amzn1.ask.skill.22d2b807-7af3-4ba3-8838-f20a201d1bf1
       Environment:
         Variables:
-          GOOGLE_SPREADSHEET_ID: "1HED3wBM2JA67VmQ-OQUe5272dm5n0bHrbkp0OMpFBkg"
-          SPREADSHEET_RANGE: "A2:G"
+          GOOGLE_SPREADSHEET_ID: ""
+          SPREADSHEET_RANGE: ""
+          GOOGLE_SHEET_API_KEY: ""
 
 Outputs:
   SpreadsheetOrganizerFunction:

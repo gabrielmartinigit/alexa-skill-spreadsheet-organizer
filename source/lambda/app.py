@@ -18,7 +18,8 @@ load_dotenv()
 
 spreadsheet = Spreadsheet(
     os.environ['GOOGLE_SPREADSHEET_ID'],
-    os.environ['SPREADSHEET_RANGE']
+    os.environ['SPREADSHEET_RANGE'],
+    os.environ['GOOGLE_SHEET_API_KEY']
 )
 
 

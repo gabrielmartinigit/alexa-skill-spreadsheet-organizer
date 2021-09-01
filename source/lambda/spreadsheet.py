@@ -5,17 +5,25 @@ from googleapiclient.discovery import build
 
 
 class Spreadsheet:
-    def __init__(self, spreadsheet_id, spreadsheet_range):
+    def __init__(self, spreadsheet_id, spreadsheet_range, api_key=None):
         self.spreadsheet_range = spreadsheet_range
         self.spreadsheet_id = spreadsheet_id
-        self.__remote_sheet = self.__get_remote_spreadsheet()
+        self.api_key = api_key  # API Key for public spreadsheets
+        self.__remote_sheet_client = self.__create_remote_spreadsheet_client()
         self.rows = self.__rows()
 
-    def __get_remote_spreadsheet(self):
-        service = build(
-            'sheets', 'v4',
-            credentials=Authenticator().credentials
-        )
+    def __create_remote_spreadsheet_client(self):
+        # If spreadsheet is public create client with API Key
+        if getattr(self, 'api_key'):
+            service = build(
+                'sheets', 'v4',
+                developerKey=self.api_key
+            )
+        else:
+            service = build(
+                'sheets', 'v4',
+                credentials=Authenticator().credentials
+            )
 
         sheet = service.spreadsheets()
 
@@ -24,7 +32,7 @@ class Spreadsheet:
     def __rows(self):
         rows = None
 
-        result = self.__remote_sheet.values().get(
+        result = self.__remote_sheet_client.values().get(
             spreadsheetId=self.spreadsheet_id,
             range=self.spreadsheet_range
         ).execute()
