@@ -1,0 +1,8 @@
+{
+    "Parameters": {
+        "GOOGLESPREADSHEETID": "<SPREADSHEETID>",
+        "SPREADSHEETRANGE": "<RANGE>",
+        "GOOGLESHEETAPIKEY": "<APIKEY>",
+        "SKILLID": "<SKILLID>"
+    }
+}

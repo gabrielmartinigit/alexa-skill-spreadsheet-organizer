@@ -2,7 +2,6 @@
 
 import logging
 import os
-from dotenv import load_dotenv
 
 import ask_sdk_core.utils as ask_utils
 from ask_sdk_core.skill_builder import SkillBuilder
@@ -14,12 +13,10 @@ from spreadsheet import Spreadsheet
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-load_dotenv()
-
 spreadsheet = Spreadsheet(
-    os.environ['GOOGLE_SPREADSHEET_ID'],
-    os.environ['SPREADSHEET_RANGE'],
-    os.environ['GOOGLE_SHEET_API_KEY']
+    os.environ['GOOGLESPREADSHEETID'],
+    os.environ['SPREADSHEETRANGE'],
+    os.environ['GOOGLESHEETAPIKEY']
 )
 
 

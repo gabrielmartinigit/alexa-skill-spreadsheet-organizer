@@ -4,7 +4,22 @@ Description: SAM Template for alexa-skill-spreadsheet-organizer
 
 Globals:
   Function:
-    Timeout: 3
+    Timeout: 6
+
+Parameters:
+  SKILLID:
+    Type: String
+    Description: Alexa Skill Id
+  GOOGLESPREADSHEETID:
+    Type: String
+    Description: Spreadsheet Id found on Google Sheets URL
+  SPREADSHEETRANGE:
+    Type: String
+    Description: Spreadsheet range that Skill will read
+  GOOGLESHEETAPIKEY:
+    Type: String
+    Description: API Key for Google Sheets API for public access
+    Default: None
 
 Resources:
   SpreadsheetOrganizerFunction:
@@ -17,12 +32,12 @@ Resources:
         AlexaSkillEvent:
           Type: AlexaSkill
           Properties:
-            SkillId: amzn1.ask.skill.22d2b807-7af3-4ba3-8838-f20a201d1bf1
+            SkillId: !Ref SKILLID
       Environment:
         Variables:
-          GOOGLE_SPREADSHEET_ID: ""
-          SPREADSHEET_RANGE: ""
-          GOOGLE_SHEET_API_KEY: ""
+          GOOGLESPREADSHEETID: !Ref GOOGLESPREADSHEETID
+          SPREADSHEETRANGE: !Ref SPREADSHEETRANGE
+          GOOGLESHEETAPIKEY: !Ref GOOGLESHEETAPIKEY
 
 Outputs:
   SpreadsheetOrganizerFunction:

@@ -7,11 +7,11 @@ __pycache__
 
 # Skill
 *.zip
-.env
 
 # SAM
 .aws-sam
 samconfig.toml
+config.json
 
 # Google
 credentials.json
