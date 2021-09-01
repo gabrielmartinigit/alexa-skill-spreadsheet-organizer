@@ -1,0 +1,294 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "organizar minha dieta",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "ReadLastMeal",
+                    "slots": [],
+                    "samples": [
+                        "Quero saber minha última refeição",
+                        "Leia minha última refeição",
+                        "Qual a minha última refeição"
+                    ]
+                },
+                {
+                    "name": "AddMeal",
+                    "slots": [
+                        {
+                            "name": "date",
+                            "type": "AMAZON.DATE"
+                        },
+                        {
+                            "name": "meal",
+                            "type": "AMAZON.Food",
+                            "samples": [
+                                "Foi {meal} viu",
+                                "Minha refeição foi {meal} Alexa",
+                                "Foi {meal}",
+                                "Minha refeição foi {meal}",
+                                "{meal}"
+                            ]
+                        },
+                        {
+                            "name": "local",
+                            "type": "CUSTOM_Local",
+                            "samples": [
+                                "Foi em {local}",
+                                "Foi na {local}",
+                                "Eu comi em {local}",
+                                "O local foi {local}"
+                            ]
+                        },
+                        {
+                            "name": "hour",
+                            "type": "AMAZON.TIME"
+                        },
+                        {
+                            "name": "food",
+                            "type": "AMAZON.Food",
+                            "samples": [
+                                "Os alimentos foram {food}",
+                                "Eu comi {food}",
+                                "Tinha {food}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "Adicionar {meal}",
+                        "Colocar {meal}",
+                        "Adicionar {meal} para às {date} ",
+                        "Adicionar uma nova refeição",
+                        "Quero adicionar uma nova refeição",
+                        "Registrar uma nova refeição",
+                        "Colocar nova refeição",
+                        "Inserir uma nova refeição",
+                        "Incluir nova refeição",
+                        "Atualizar última refeição",
+                        "Adicionar uma refeição",
+                        "Adicionar nova refeição"
+                    ]
+                }
+            ],
+            "types": [
+                {
+                    "name": "AMAZON.Food",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "Ceia"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Lanche da tarde"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Janta",
+                                "synonyms": [
+                                    "Jantar"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Almoço"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Café da manhã"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "CUSTOM_Local",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "Rua",
+                                "synonyms": [
+                                    "Street"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Casa",
+                                "synonyms": [
+                                    "House"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "AddMeal",
+                    "delegationStrategy": "ALWAYS",
+                    "confirmationRequired": true,
+                    "prompts": {
+                        "confirmation": "Confirm.Intent.480342597009"
+                    },
+                    "slots": [
+                        {
+                            "name": "date",
+                            "type": "AMAZON.DATE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "meal",
+                            "type": "AMAZON.Food",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.480342597009.821691981180"
+                            },
+                            "validations": [
+                                {
+                                    "type": "isInSet",
+                                    "prompt": "Slot.Validation.480342597009.821691981180.1318344050487",
+                                    "values": [
+                                        "Almoço",
+                                        "Ceia",
+                                        "Lanche da tarde",
+                                        "Café da manhã",
+                                        "Jantar"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "local",
+                            "type": "CUSTOM_Local",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.683871160285.774547456553"
+                            },
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.683871160285.774547456553.1223310331865"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "hour",
+                            "type": "AMAZON.TIME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "food",
+                            "type": "AMAZON.Food",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.683871160285.168974355729"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "ALWAYS"
+        },
+        "prompts": [
+            {
+                "id": "Confirm.Intent.480342597009",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Confirmando, devo adicionar {meal} ?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Devo adicionar {meal} em {local} às {hour} , correto ?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.480342597009.821691981180",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Sua refeição foi café da manhã, almoço, lanche da tarde, jantar ou ceia?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Qual foi a refeição?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.480342597009.821691981180.1318344050487",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Você pode dizer café da manhã, almoço, lanche da tarde, jantar ou ceia. Pode confirmar a refeição?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.683871160285.774547456553",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Qual foi o local da refeição?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.683871160285.774547456553.1223310331865",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Você pode dizer em casa ou na rua. Pode confirmar o local?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.683871160285.168974355729",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "O que tinha na refeição?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "O que você comeu?"
+                    }
+                ]
+            }
+        ]
+    }
+}
