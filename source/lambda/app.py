@@ -9,9 +9,16 @@ from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.dispatch_components import AbstractExceptionHandler
 
 from spreadsheet import Spreadsheet
+from datetime import datetime
+import pytz
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
+
+spreadsheet = Spreadsheet(
+    os.environ['GOOGLESPREADSHEETID'],
+    os.environ['SPREADSHEETRANGE']
+)
 
 
 class LaunchRequestHandler(AbstractRequestHandler):
@@ -38,12 +45,6 @@ class ReadLastMealIntentHandler(AbstractRequestHandler):
         return ask_utils.is_intent_name("ReadLastMeal")(handler_input)
 
     def handle(self, handler_input):
-        spreadsheet = Spreadsheet(
-            os.environ['GOOGLESPREADSHEETID'],
-            os.environ['SPREADSHEETRANGE'],
-            os.environ['GOOGLESHEETAPIKEY']
-        )
-
         last_meal = spreadsheet.get_last_row()
         data = last_meal[0]
         meal = last_meal[1]
@@ -51,12 +52,45 @@ class ReadLastMealIntentHandler(AbstractRequestHandler):
         food = last_meal[4]
 
         speak_output = f"Sua última refeição foi {meal} no dia {data} às {hour}. Você comeu {food}"
-        #reprompt = "Tem mais alguma pergunta? Se não diga terminei."
 
         return (
             handler_input.response_builder
             .speak(speak_output)
-            # .ask(reprompt)
+            .response
+        )
+
+
+class AddMealIntentHandler(AbstractRequestHandler):
+    """Handler for AddMeal Intent."""
+
+    def can_handle(self, handler_input):
+        return ask_utils.is_intent_name("AddMeal")(handler_input)
+
+    def handle(self, handler_input):
+        # Get Alexa slots values
+        slots = handler_input.request_envelope.request.intent.slots
+        meal = slots['meal'].value
+        food = slots['food'].value
+        local = slots['local'].value
+        today = datetime.today().strftime("%d/%m/%Y")
+        timezone = pytz.timezone("America/Sao_Paulo")
+        current_time = datetime.now(timezone).strftime("%H:%M")
+
+        spreadsheet.create_row(
+            today,
+            meal,
+            local,
+            current_time,
+            food,
+            'N/A',
+            'N/A'
+        )
+
+        speak_output = "Sua refeição foi adicionada!"
+
+        return (
+            handler_input.response_builder
+            .speak(speak_output)
             .response
         )
 
@@ -172,6 +206,7 @@ sb = SkillBuilder()
 
 sb.add_request_handler(LaunchRequestHandler())
 sb.add_request_handler(ReadLastMealIntentHandler())
+sb.add_request_handler(AddMealIntentHandler())
 sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelOrStopIntentHandler())
 sb.add_request_handler(FallbackIntentHandler())

@@ -46,7 +46,7 @@ sam local invoke SpreadsheetOrganizerFunction --env-vars config/config.json --ev
 ## :cloud: Deploy
 
 ```bash
-sam deploy --stack-name spreadsheet-organizer-skill --resolve-s3 --capabilities CAPABILITY_IAM --parameter-overrides ParameterKey=GOOGLESPREADSHEETID,ParameterValue="$(jq -r '.Parameters.GOOGLESPREADSHEETID' 'config/config.json')" ParameterKey=SPREADSHEETRANGE,ParameterValue="$(jq -r '.Parameters.SPREADSHEETRANGE' 'config/config.json')" ParameterKey=GOOGLESHEETAPIKEY,ParameterValue="$(jq -r '.Parameters.GOOGLESHEETAPIKEY' 'config/config.json')" ParameterKey=SKILLID,ParameterValue="$(jq -r '.Parameters.SKILLID' 'config/config.json')"
+sam deploy --stack-name spreadsheet-organizer-skill --resolve-s3 --capabilities CAPABILITY_IAM --parameter-overrides ParameterKey=GOOGLESPREADSHEETID,ParameterValue="$(jq -r '.Parameters.GOOGLESPREADSHEETID' 'config/config.json')" ParameterKey=SPREADSHEETRANGE,ParameterValue="$(jq -r '.Parameters.SPREADSHEETRANGE' 'config/config.json')" ParameterKey=SKILLID,ParameterValue="$(jq -r '.Parameters.SKILLID' 'config/config.json')"
 ```
 
 ## :scroll: License Summary

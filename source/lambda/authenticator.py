@@ -1,21 +1,31 @@
 # -*- coding: utf-8 -*-
 
 import os
-from google.oauth2.credentials import Credentials
+from google.oauth2.credentials import Credentials as client_id
+from google.oauth2.service_account import Credentials as service_account
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 
 
 class Authenticator:
     def __init__(self):
-        self.scopes = ['https://www.googleapis.com/auth/spreadsheets.readonly']
-        self.credentials = self.__get_credentials_oauth()
+        self.scopes = [
+            'https://www.googleapis.com/auth/spreadsheets.readonly',
+            'https://www.googleapis.com/auth/spreadsheets'
+        ]
+        self.credentials = self.__get_credentials_service()
+
+    def __get_credentials_service(self):
+        creds = service_account.from_service_account_file(
+            'service_account.json')
+
+        return creds
 
     def __get_credentials_oauth(self):
         creds = None
 
         if os.path.exists('token.json'):
-            creds = Credentials.from_authorized_user_file(
+            creds = client_id.from_authorized_user_file(
                 'token.json', self.scopes)
 
         if not creds or not creds.valid:

@@ -16,10 +16,6 @@ Parameters:
   SPREADSHEETRANGE:
     Type: String
     Description: Spreadsheet range that Skill will read
-  GOOGLESHEETAPIKEY:
-    Type: String
-    Description: API Key for Google Sheets API for public access
-    Default: None
 
 Resources:
   SpreadsheetOrganizerFunction:
@@ -37,7 +33,6 @@ Resources:
         Variables:
           GOOGLESPREADSHEETID: !Ref GOOGLESPREADSHEETID
           SPREADSHEETRANGE: !Ref SPREADSHEETRANGE
-          GOOGLESHEETAPIKEY: !Ref GOOGLESHEETAPIKEY
 
 Outputs:
   SpreadsheetOrganizerFunction:
